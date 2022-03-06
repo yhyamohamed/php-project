@@ -1,0 +1,21 @@
+{
+    "name": "avengers/php-project",
+    "description": "sth fun",
+    "license": "ITI",
+    "autoload": {
+        "psr-4": {
+            "Avengers\\PhpProject\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "yhyamohamed",
+            "email": "62445980+yhyamohamed@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "robmorgan/phinx": "^0.12.10",
+        "illuminate/database": "^9.3",
+        "fakerphp/faker": "^1.19"  
+    }
+}
