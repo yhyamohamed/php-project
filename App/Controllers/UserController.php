@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Model\User;
 
 
@@ -10,33 +11,76 @@ class USerController implements Controller
 
     public function __construct()
     {
-       $this->user= new User;
+        $this->user = new User;
     }
-    public function index(){
-        
+
+    public function index()
+    {
+        return $this->user->getAllUsers();
     }
-    public function create(){
-        
+
+    public function create($email, $pass)
+    {
+        $useremail = filter_var(trim($email), FILTER_SANITIZE_EMAIL);
+        $pass = htmlspecialchars(trim($pass));
+        $user = ([
+            'email' =>  $useremail,
+            'password' =>  sha1($pass)
+
+        ]);
+        $this->store($user);
     }
-     public function store($user){
-         
-     }
-    public function show($useremail,$pass){
+    // return ok or Error 
+    public function store($user)
+    {
+        return $this->user->register($user);
+    }
+
+    // return: 
+    // array of 1 object
+    //[id] => 
+    //[Email] => 
+    //[password] => 
+    //[remeber_me_token] => 
+    // or empty array 
+    public function show($useremail, $pass, $rememberMeFlag)
+    {
         //validate
-       $useremail = filter_var(trim($useremail),FILTER_SANITIZE_EMAIL);
+        $useremail = filter_var(trim($useremail), FILTER_SANITIZE_EMAIL);
         $pass = htmlspecialchars(trim($pass));
         // send to model
-        $user = $this->user->login($useremail,sha1($pass));
-        // return response to view
-        return $user;
+        //to do generate remember me token
+        return $this->user->login($useremail, sha1($pass));
     }
-    public function edit($id){
-        
-    } 
-    public function update($id){
-        
-    } 
-    public function destroy($id){
-        
+    public function search($useremail)
+    {
+        $useremail = filter_var(trim($useremail), FILTER_SANITIZE_EMAIL);
+        return $this->user->findByEmail($useremail);
+    }
+    // to pass only password edit(7,pass:1234567);
+    public function edit($id, $email = null, $pass = null)
+    {
+        //get user data
+        $userToEdit = $this->user->getData($id);
+        if ($userToEdit) {
+            $emailToedit = $email ?? $userToEdit->Email;
+            $passToedit = sha1($pass) ?? $userToEdit->password;
+            $userData = ([
+                'email' =>  $emailToedit,
+                'password' => $passToedit
+
+            ]);
+            $this->update($id, $userData);
+        }else{
+            return 'Error invalid id';
+        }
+    }
+    public function update($id, $user)
+    {
+        return $this->user->update($id, $user);
+    }
+    public function destroy($id)
+    {
+        echo $this->user->delete($id);
     }
 }

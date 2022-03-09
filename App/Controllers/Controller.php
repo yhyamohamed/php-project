@@ -5,11 +5,12 @@ namespace App\Controllers;
 interface Controller
 {
     public function index(); //list all resource data 
-    public function create(); //render form for data
+    public function create($mail, $pass); //render form for data
     public function store($user); //presist new resource data (from request) & redirect 
-    public function show($username,$pass);
-    public function edit($id); //render data in form to edit 
-    public function update($id); //presist  edits & redirect 
+    public function show($username, $pass,$rememberMeFlag);
+    public function search($useremail);
+    public function edit($id,$email,$pass); //render data in form to edit 
+    public function update($id,$user); //presist  edits & redirect 
     public function destroy($id);
 
 
