@@ -4,8 +4,9 @@
     "license": "ITI",
     "autoload": {
         "psr-4": {
-            "Avengers\\PhpProject\\": "App/"
-        }
+            "App\\": "App/"
+        },
+        "files": ["config.php"]
     },
     "authors": [
         {
