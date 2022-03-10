@@ -3,11 +3,9 @@
     "description": "sth fun",
     "license": "ITI",
     "autoload": {
-        "classmap" : ["controller"],
-        "files" :["config.php"],
-        "psr-4": {
-            "Avengers\\PhpProject\\": "App/"
-        }
+        "classmap" : ["App/"],
+        "files" :["config.php"]
+        
     },
     "authors": [
         {

@@ -2,16 +2,12 @@
 interface UserTest
 {
     // note: 1- implement setter for database fields
-    
+
     // 2-functions 
-    public function login(); 
-    public function logout(); 
-    public function register(); 
-    public function update($id);
-    public function delete($id); 
-    public function getdata($id);
-
-
-
-   
+    public function login();        //done
+    //  public function logout();
+     public function register();    //done
+     public function update($id);   //done
+     public function delete($id);   //done
+     public function getdata($id);  //done
 }
