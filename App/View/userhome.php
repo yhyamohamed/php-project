@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("C:xampp/htdocs/php tasks/phpfinal/php-project/vendor/autoload.php");
+require_once("C:xampp/htdocs/php-project/vendor/autoload.php");
 // $user_obj = new User();
 $User_cont = new UserController();
 if (isset($_SESSION['user_id'])) {
@@ -15,5 +15,5 @@ if (isset($_SESSION['user_id'])) {
 var_dump($user);
 ?>
 <h1>profile page</h1>
-<a href="http://localhost/php%20tasks/phpfinal/php-project/App/View/profile_edit.php">edit_profile</a>
-<a href="http://localhost/php%20tasks/phpfinal/php-project/App/View/logout.php">logout</a>
+<a href="http://localhost:8080/php-project/App/View/profile_edit.php">edit_profile</a>
+<a href="http://localhost:8080/php-project/App/View/logout.php">logout</a>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("C:xampp/htdocs/php tasks/phpfinal/php-project/vendor/autoload.php");
+require_once("C:/xampp/htdocs/php-project/vendor/autoload.php");
 $user_obj = new User();
 $User_cont = new UserController();
 echo $_SERVER['REQUEST_METHOD'];
@@ -15,39 +15,15 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         $error = "wrong user name or password";
         echo "$error";
     }
-
-
-    // redirect to profile page
-    // 
-    //     $user = $User_cont->show($id);
-    //     $GLOBALS['user'] = $user;
-    //     var_dump($GLOBALS['user']);
-    // }
 }
-// var_dump($_SESSION['user_id']);
-
-// require_once("p2.php");
-
 ?>
-
 <html>
-
 <body>
-
-    <a href="http://localhost/php%20tasks/phpfinal/php-project/App/View/register.php">register</a>
+    <a href="http://localhost:8080/php-project/App/View/register.php">register</a>
     <form action="#" method="POST">
-        <input type="text" name="email">
-        <input type="text" name="password">
+        <input type="text" name="email" />
+        <input type="text" name="password" />
         <button type="submit">submit</button>
-
-
     </form>
-
-    }
-
-
 </body>
-
-
-
 </html>

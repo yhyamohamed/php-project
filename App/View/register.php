@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("C:xampp/htdocs/php tasks/phpfinal/php-project/vendor/autoload.php");
+require_once("C:xampp/htdocs/php-project/vendor/autoload.php");
 $user_cont = new UserController();
 if (isset($_POST['email'])) {
     $user_cont->store();

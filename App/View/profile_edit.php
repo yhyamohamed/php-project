@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("C:xampp/htdocs/php tasks/phpfinal/php-project/vendor/autoload.php");
+require_once("C:xampp/htdocs/php-project/vendor/autoload.php");
 // $user_obj = new User();
 $User_cont = new UserController();
 if (isset($_SESSION['user_id'])) {
@@ -12,10 +12,7 @@ if (isset($_POST['submit_edit'])) {
 }
 
 ?>
-
-
-<html>
-
+<html lang="en">
 <body>
     <form action="#" method="POST">
         <table>
@@ -38,12 +35,6 @@ if (isset($_POST['submit_edit'])) {
 
 
     </form>
-    <a href="http://localhost/php%20tasks/phpfinal/php-project/App/View/delete.php">delete_my_account</a>
-
-
-
-    </form>
+    <a href="http://localhost:8080/php-project/App/View/delete.php">delete_my_account</a>
 </body>
-
-
 </html>
