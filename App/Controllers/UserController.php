@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Model\User;
 
 
-class USerController implements Controller
+class UserController implements Controller
 {
     public User $user;
 

@@ -1,9 +1,9 @@
 <?php
 
 require_once '../../vendor/autoload.php';
-use App\Controllers\USerController;
+use App\Controllers\UserController;
 
-$u = new USerController;
+$u = new UserController;
 
 // $user = $u->show('yaya@gmail.com', 123456);
 
