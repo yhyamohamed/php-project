@@ -28,7 +28,7 @@ class UserController implements Controller
             'password' =>  sha1($pass)
 
         ]);
-        $this->store($user);
+        return $this->store($user);
     }
     // return ok or Error 
     public function store($user)

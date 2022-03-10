@@ -19,7 +19,7 @@ class User implements UserTest
         return $this->table
             ->where('Email', $email)
             ->where('password', $hashedPass)
-            ->get();
+            ->get()->first();
     }
     public function logout()
     {
@@ -31,7 +31,7 @@ class User implements UserTest
             return "ok";
         } catch (\PDOException $ex) {
             // return $ex->getMessage();
-            return "Error ";
+            return "Error";
         }
     }
     public function update($id, $data)

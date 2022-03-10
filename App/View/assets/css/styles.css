@@ -1,0 +1,17 @@
+.carousel-container , .carousel-container .carousel-item, .product-image{
+  height: 400px;
+}
+.carousel-item, .product-image {
+  background-position: center;
+  background-size: cover;
+}
+.product-image-upload {
+  height: 190px;
+  width: 150px;
+}
+img {
+  height: 100%;
+}
+textarea {
+  resize: none;
+}

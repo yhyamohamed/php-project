@@ -1,19 +1,11 @@
 <?php
-
+session_start();
 require_once '../../vendor/autoload.php';
-use App\Controllers\UserController;
-
-$u = new UserController;
-
-// $user = $u->show('yaya@gmail.com', 123456);
-
-// $user = $u->index();
-// $user = $u->create('yaya1@gmail.com', 123456);
-// $user = $u->edit(8,pass:1234567);
-$user = $u->destroy(5);
 
 echo "<pre>";
-print_r($user);
+print_r($_SESSION);
 echo "<pre>";
 
-
+echo "Download count: 5";
+echo "<button>download</button>";
+echo "<button>logout</button>";
