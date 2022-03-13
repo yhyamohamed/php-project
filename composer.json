@@ -17,6 +17,7 @@
     "require": {
         "robmorgan/phinx": "^0.12.10",
         "illuminate/database": "^9.3",
-        "fakerphp/faker": "^1.19"  
+        "fakerphp/faker": "^1.19",
+        "ext-pdo": "*"
     }
 }

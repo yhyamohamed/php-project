@@ -31,7 +31,7 @@ class User implements UserTest
             return $this->table->insertGetId($user);
         } catch (\PDOException $ex) {
             // return $ex->getMessage();
-            return "Error ";
+            return "Error";
         }
     }
     public function update($id, $data)
