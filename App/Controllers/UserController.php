@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Model\User;
+use App\Controllers\TokenController;
+use App\Controllers\OrderController;
 
 
 class USerController implements Controller
@@ -12,6 +14,8 @@ class USerController implements Controller
     public function __construct()
     {
         $this->user = new User;
+        $this->tokenController = new TokenController;
+        $this->ordersController = new OrderController;
     }
 
     public function index()
@@ -28,7 +32,7 @@ class USerController implements Controller
             'password' =>  sha1($pass)
 
         ]);
-        $this->store($user);
+        return $this->store($user);
     }
     // return ok or Error 
     public function store($user)
@@ -48,9 +52,27 @@ class USerController implements Controller
         //validate
         $useremail = filter_var(trim($useremail), FILTER_SANITIZE_EMAIL);
         $pass = htmlspecialchars(trim($pass));
-        // send to model
-        //to do generate remember me token
-        return $this->user->login($useremail, sha1($pass));
+        $user = $this->user->login($useremail, sha1($pass));
+
+        // generate remember me token
+        if ($user && $rememberMeFlag === 'on' && !isset($_COOKIE['remember-me'])) {
+            $this->tokenController->create($user->id);
+        } else {
+            //find tokens
+            $tokens = $this->tokenController->searchallUserTokens($user->id);
+            //will return index of first matched token or null
+            $foundIndex = array_search($_COOKIE['remember-me'], array_column(json_decode($tokens), 'remeber_me_token'));
+
+            if ($foundIndex >= 0) {
+                $token_id = $tokens[$foundIndex]->id;
+                $this->tokenController->editOrRenwToken($token_id, true);
+            }
+        }
+        //attatch orders & tokens with user obj 
+        $user->{'tokens'} = $this->tokenController->searchallUserTokens($user->id);
+        $user->{'orders'} = $this->ordersController->getUserOrders($user->id);
+  
+        return $user;
     }
     public function search($useremail)
     {
@@ -71,7 +93,7 @@ class USerController implements Controller
 
             ]);
             $this->update($id, $userData);
-        }else{
+        } else {
             return 'Error invalid id';
         }
     }

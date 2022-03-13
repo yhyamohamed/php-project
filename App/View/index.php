@@ -5,7 +5,7 @@ use App\Controllers\USerController;
 
 $u = new USerController;
 
-// $user = $u->show('yaya@gmail.com', 123456);
+// $user = $u->show('admin@admin.com', 123456,'on');
 
 // $user = $u->index();
 // $user = $u->create('yaya1@gmail.com', 123456);
