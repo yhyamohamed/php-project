@@ -13,7 +13,7 @@ final class CreateOrdersTable extends AbstractMigration
         $table->addColumn('product_name', 'string')
             ->addColumn('user_id', 'integer')
             ->addColumn('product_id', 'integer')
-            ->addColumn('dounload_count', 'integer')
+            ->addColumn('download_count', 'integer')
             ->addColumn('order_date', 'timestamp', [
                 'timezone' => true,
                 'default' => Literal::from('now()')

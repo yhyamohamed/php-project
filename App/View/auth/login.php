@@ -6,10 +6,12 @@
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $remember_me = isset($_POST['remember_me'])? 'on':false;
     $controller = new UserController();
-    if ($userData = $controller->show($email, $password, false)) {
+    if ($userData = $controller->show($email, $password, $remember_me)) {
       $_SESSION['user_id'] = $userData->id;
       header('Location:../index.php');
+      var_dump($_SESSION['useri_id']);
       die;
     } else {
       $error = "Invalid Credentials";
@@ -17,7 +19,7 @@
   }
   $title = "Login";
   $active = "login";
-  const BASE_PATH = "/php-project/App/View";
+  const BASE_PATH = "/PhpProject/php-project/App/View";
   define("BASE_URL", $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . BASE_PATH);
   include "../includes/head.html";
   include "../includes/header.html";
@@ -47,7 +49,7 @@
           <input type="password" name="password" class="form-control" id="inputPassword">
         </div>
         <div class="form-check form-switch mb-3">
-          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+          <input class="form-check-input" name="remember_me" type="checkbox" id="flexSwitchCheckDefault">
           <label class="form-check-label" for="flexSwitchCheckDefault">Remember Me!</label>
         </div>
         <div class="d-flex justify-content-center mb-3">

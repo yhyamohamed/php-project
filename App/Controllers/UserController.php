@@ -61,7 +61,7 @@ class UserController implements Controller
             //find tokens
             $tokens = $this->tokenController->searchallUserTokens($user->id);
             //will return index of first matched token or null
-            $foundIndex = array_search($_COOKIE['remember-me'], array_column(json_decode($tokens), 'remeber_me_token'));
+            $foundIndex = array_search($_COOKIE['remember_me'], array_column(json_decode($tokens), 'remeber_me_token'));
 
             if ($foundIndex >= 0) {
                 $token_id = $tokens[$foundIndex]->id;

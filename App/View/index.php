@@ -2,9 +2,10 @@
 session_start();
 require_once '../../vendor/autoload.php';
 
-use App\Controllers\USerController;
-
-$u = new USerController;
+use App\Controllers\UserController;
+var_dump($_SESSION);
+var_dump($_COOKIE);
+$u = new UserController;
 
 // $user = $u->show('admin@admin.com', 123456,'on');
 
