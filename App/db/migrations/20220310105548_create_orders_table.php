@@ -10,7 +10,7 @@ final class CreateOrdersTable extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('Orders');
-        $table->addColumn('download_count', 'integer')
+        $table->addColumn('product_name', 'string')
             ->addColumn('user_id', 'integer')
             ->addColumn('product_id', 'integer')
             ->addColumn('dounload_count', 'integer')
@@ -18,7 +18,7 @@ final class CreateOrdersTable extends AbstractMigration
                 'timezone' => true,
                 'default' => Literal::from('now()')
             ])
-            ->addColumn('product_name', 'string')
+            
             ->addForeignKey('user_id', 'Users', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
             ->addForeignKey('product_id', 'Products', 'id', ['delete' => 'NO_ACTION', 'update' => 'CASCADE'])
             ->create();
