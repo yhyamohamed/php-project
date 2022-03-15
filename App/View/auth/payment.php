@@ -4,7 +4,21 @@
   session_start();
   require_once("../../../vendor/autoload.php");
   use App\Controllers\UserController;
+  use App\Controllers\TokenController;
+  //will be used fore redirection
+  use App\Utilities\Helper;
+  $token = new TokenController();
+  $user = new UserController();
   $error = '';
+  //check for remember me
+  if(isset($_COOKIE['remember-me']) && !isset($_SESSION['user_id'])){
+      $tokenDetails = $token->checkToken($_COOKIE['remember-me']);
+      var_dump($tokenDetails->user_id);
+      $_SESSION['user_id']=$tokenDetails->user_id;
+      $userId = $tokenDetails->user_id;
+      $user->loginWithToken($userId);
+      die;
+  }
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST["name"];
     $email = $_POST["email"];

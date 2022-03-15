@@ -11,7 +11,7 @@
     if ($userData = $controller->show($email, $password, $remember_me)) {
       $_SESSION['user_id'] = $userData->id;
       header('Location:../index.php');
-      var_dump($_SESSION['useri_id']);
+      var_dump($_SESSION['user_id']);
       die;
     } else {
       $error = "Invalid Credentials";

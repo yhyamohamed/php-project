@@ -83,4 +83,9 @@ class TokenController
     {
         setcookie('remember-me', " ", time() - 60 * 60 * 60, '/');
     }
+    public function checkToken ($recievedToken)
+    {
+        return $this->token->findToken($recievedToken);
+
+    }
 }

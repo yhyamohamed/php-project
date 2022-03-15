@@ -10,6 +10,7 @@ use App\Controllers\OrderController;
 class UserController implements Controller
 {
     public User $user;
+    public Token $token;
 
     public function __construct()
     {
@@ -61,7 +62,7 @@ class UserController implements Controller
             //find tokens
             $tokens = $this->tokenController->searchallUserTokens($user->id);
             //will return index of first matched token or null
-            $foundIndex = array_search($_COOKIE['remember_me'], array_column(json_decode($tokens), 'remeber_me_token'));
+            $foundIndex = array_search($_COOKIE['remember-me'], array_column(json_decode($tokens), 'remeber_me_token'));
 
             if ($foundIndex >= 0) {
                 $token_id = $tokens[$foundIndex]->id;
@@ -104,5 +105,14 @@ class UserController implements Controller
     public function destroy($id)
     {
         echo $this->user->delete($id);
+    }
+    public function loginWithToken($userId)
+    {
+        $tokens = $this->tokenController->searchallUserTokens($userId);
+        $foundIndex = array_search($_COOKIE['remember-me'], array_column(json_decode($tokens), 'remeber_me_token'));
+        if ($foundIndex >= 0) {
+            $token_id = $tokens[$foundIndex]->id;
+            $this->tokenController->editOrRenwToken($token_id, true);
+        }
     }
 }
