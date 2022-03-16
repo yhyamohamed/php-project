@@ -16,12 +16,12 @@ class OrdersSeeder extends AbstractSeed
     {
         $faker = Faker\Factory::create();
         $data = [];
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 5; $i++)
+        {
             $data[] = [
                 'download_count' => $faker->numberBetween(0, 6),
                 'user_id' => $faker->numberBetween(1, 5),
-                'product_id' => $faker->numberBetween(1, 5),
-                'product_name' => $faker->firstNameMale(),
+                'product_id' => $faker->numberBetween(1, 5)
             ];
         }
 
