@@ -2,6 +2,7 @@
 
 session_start();
 require_once("../../../vendor/autoload.php");
+
 use App\Controllers\UserController;
 
 $controller = new UserController();
@@ -12,4 +13,3 @@ $controller->logOut($userToken);
 
 header('Location:payment.php');
 die;
-
