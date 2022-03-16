@@ -4,6 +4,7 @@
 session_start();
 require_once("../../../vendor/autoload.php");
 
+use App\Controllers\OrderController;
 use App\Controllers\UserController;
 use App\Controllers\TokenController;
 //will be used fore redirection
@@ -12,6 +13,7 @@ use App\Utilities\Helper;
 $token = new TokenController();
 $user = new UserController();
 $error = '';
+$product_id = 1;
 //check for remember me
 if (isset($_COOKIE['remember-me']) && !isset($_SESSION['user_id']))
 {
@@ -45,15 +47,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
   $ccyear = $_POST['ccyear'];
   $cvv = $_POST['cvv'];
   $controller = new UserController();
-
-  if (strlen($ccnumber) != 16) //CCNO is valid
+  $orderController = new OrderController;
+  if (strlen($ccnumber) == 16) //CCNO is valid
   {
     $result = $controller->create($email, $password);
-    if ($result === "ok")
+    if ($result >= 0)
     {
+
       $userData = $controller->show($email, $password, false);
       $_SESSION['user_id'] = $userData->id;
-      header('Location:../index.php');
+      $order = $orderController->create($_SESSION["user_id"], $product_id);
+      header("Location:../downloadpage.php?product_id=$product_id");
       die;
     }
     else

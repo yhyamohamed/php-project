@@ -19,7 +19,7 @@ class Order
     {
         try
         {
-            return $this->table->insertGetId($order);;
+            return $this->table->insertGetId($order);
         }
         catch (\PDOException $ex)
         {
@@ -66,13 +66,7 @@ class Order
         return $this->table
             ->find($id);
     }
-    public function findByName($product_name, $userId)
-    {
-        return $this->table
-            ->where('product_name', 'like', "%$product_name%")
-            ->where('user_id',  $userId)
-            ->get()->first();
-    }
+
     public function findByIds($userId, $product_id)
     {
 

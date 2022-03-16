@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Model\Order;
+use App\Model\Product;
 
 
 class OrderController
@@ -12,6 +13,7 @@ class OrderController
     public function __construct()
     {
         $this->Order = new Order;
+        $this->Product = new Product;
     }
 
     public function index()
@@ -19,23 +21,25 @@ class OrderController
         return $this->Order->getAllOrders();
     }
 
-    public function create($product_name, $user_id, $product_id)
+    public function create($user_id, $product_id)
     {
-        $product_name = htmlspecialchars(trim($product_name));
         $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
         $product_id = filter_var($product_id, FILTER_SANITIZE_NUMBER_INT);
 
         $Order = ([
-            'product_name' =>  $product_name,
-            'user_id ' =>  $user_id,
+            'user_id' =>  $user_id,
             'product_id' =>  $product_id
 
         ]);
+        // echo "Hiii 123 ";
+        // print_r($Order);
+        // die();
         return $this->store($Order);
     }
 
     public function store($Order)
     {
+        // echo "hello 1 " . $this->Order->add($Order);
         return $this->Order->add($Order);
     }
 
@@ -46,8 +50,10 @@ class OrderController
     }
     public function search($product_name, $user_id)
     {
+
         $product_name = htmlspecialchars(trim($product_name));
-        return $this->Order->findByName($product_name, $user_id);
+        $Product = $this->Product->findByName($product_name);
+        return $this->Order->findByIds($Product->id, $user_id);
     }
 
     public function edit($id, $pname = null, $link = null)

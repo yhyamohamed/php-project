@@ -7,12 +7,31 @@ use App\Controllers\ProductController;
 use App\Controllers\OrderController;
 
 $pc = new ProductController;
-$link_token = $pc->showDetails(1)->download_file_link;
+$orderController = new OrderController;
+$product_id = 1;
+if ($_SERVER['REQUEST_METHOD'] === "GET")
+{
+    if (count($_GET) > 0)
+    {
+        if (isset($_GET["product_id"]))
+        {
+            $product_id = intval($_GET["product_id"]);
+            // $order = $orderController->create($_SESSION["user_id"], $product_id);
+        }
+    }
+}
+
+
+$link_token = $pc->showDetails($product_id)->download_file_link;
 $path = "../products/download.php?file=";
 
 $url = $path . $link_token;
 $oc = new OrderController;
 $download_count = $oc->getDownloadCount($_SESSION["user_id"]) ?? 1;
+
+
+
+
 
 ?>
 
@@ -53,9 +72,10 @@ $download_count = $oc->getDownloadCount($_SESSION["user_id"]) ?? 1;
                         { ?>
                             <div class="d-flex align-items-center justify-content-between">
                                 <p class="m-0 lead">Download count: <span class="h4 fw-bold"><?php echo "$download_count" ?></span></p>
-                                <a href="<?php echo $url; ?>" class="btn btn-primary m-1 px-5" type="button">Download</a>
+                                <a href="<?php echo $url; ?>" class="btn btn-primary m-1 px-5" type="button" id="download">Download</a>
                             </div>
                         <?php } ?>
+
                     </div>
                 </div>
                 <br><br>
@@ -87,7 +107,15 @@ $download_count = $oc->getDownloadCount($_SESSION["user_id"]) ?? 1;
     </div>
     </div>
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $("#download").click((e) => {
+            setTimeout(() => {
+                location.reload();
+                return false;
+            }, 500);
+        });
+    </script>
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>
 </body>
