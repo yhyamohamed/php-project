@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Model\Product;
 
 
-class ProductController 
+class ProductController
 {
     public Product $Product;
 
@@ -51,16 +51,19 @@ class ProductController
     {
         //get Product data
         $ProductToEdit = $this->Product->getData($id);
-        if ($ProductToEdit) {
+        if ($ProductToEdit)
+        {
             $pnameToedit = $pname ?? $ProductToEdit->product_name;
             $linkToedit = $link  ?? $ProductToEdit->download_file_link;
             $ProductData = ([
-                'product_name' =>  $pnameToedit ,
+                'product_name' =>  $pnameToedit,
                 'download_file_link' => $linkToedit
 
             ]);
             $this->update($id, $ProductData);
-        } else {
+        }
+        else
+        {
             return 'Error invalid id';
         }
     }

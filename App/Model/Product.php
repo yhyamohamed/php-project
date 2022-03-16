@@ -17,20 +17,26 @@ class Product
 
     public function add($product)
     {
-        try {
+        try
+        {
             return $this->table->insertGetId($product);;
-        } catch (\PDOException $ex) {
+        }
+        catch (\PDOException $ex)
+        {
             // return $ex->getMessage();
             return "Error ";
         }
     }
     public function update($id, $data)
     {
-        try {
+        try
+        {
             $this->table->where('id', $id)
                 ->update($data);
             return "ok";
-        } catch (\PDOException $ex) {
+        }
+        catch (\PDOException $ex)
+        {
             // return $ex->getMessage();
             return "Error ";
         }
@@ -38,11 +44,14 @@ class Product
     public function delete($id)
     {
 
-        try {
+        try
+        {
             $this->table->where('id', $id)
                 ->delete();
             return "ok";
-        } catch (\PDOException $ex) {
+        }
+        catch (\PDOException $ex)
+        {
             // return $ex->getMessage();
             return "Error ";
         }
@@ -56,7 +65,7 @@ class Product
     {
         return $this->table
             ->where('product_name', 'like', "%$pname%")
-            ->get()->first();;
+            ->get()->first();
     }
     public function getAllProducts()
     {
