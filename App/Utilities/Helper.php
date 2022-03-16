@@ -8,6 +8,7 @@ class Helper{
     static function redirect($redirectionLocation){
         header("Location:$redirectionLocation");
     }
+
 }
 
 //TODO: on top of each page needing the redirect
