@@ -35,7 +35,7 @@ else if (isset($_COOKIE['remember-me']) && isset($_SESSION['user_id']))
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
-  $name = $_POST["name"];
+  // $name = $_POST["name"];
   $email = $_POST["email"];
   $password = $_POST["password"];
   $passwordconf = $_POST["passwordconf"];
@@ -107,11 +107,11 @@ include "../includes/header.html";
             <div class="mb-3">
               <h4>Account credentials:</h4>
             </div>
-            <div class="mb-3">
+            <!-- <div class="mb-3">
               <label for="name" class="form-label">Name</label>
               <input type="text" class="form-control" id="name" aria-describedby="nameHelp" name="name">
               <div id="nameHelp" class="form-text"></div>
-            </div>
+            </div> -->
             <div class="mb-3">
               <label for="email" class="form-label">Email address</label>
               <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">

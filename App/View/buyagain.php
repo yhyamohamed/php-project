@@ -37,10 +37,6 @@ else if (isset($_COOKIE['remember-me']) && isset($_SESSION['user_id']))
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
-  $name = $_POST["name"];
-  $email = $_POST["email"];
-  $password = $_POST["password"];
-  $passwordconf = $_POST["passwordconf"];
   $ccname = $_POST['ccname'];
   $ccnumber = $_POST['ccnumber'];
   $ccmonth = $_POST['ccmonth'];
