@@ -73,6 +73,12 @@ class TokenController
         $this->deleteToken();
         return $this->token->delete($id);
     }
+    public function deleteByTokenName($token_name)
+    {
+       $token =  $this->token->findToken($token_name);
+        return $this->destroy($token->id);
+    
+    }
     public function generateNewToken()
     {
         $token = sha1($this->faker->uuid());

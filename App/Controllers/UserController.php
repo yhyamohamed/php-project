@@ -10,7 +10,7 @@ use App\Controllers\OrderController;
 class UserController implements Controller
 {
     public User $user;
-    public Token $token;
+
 
     public function __construct()
     {
@@ -71,8 +71,8 @@ class UserController implements Controller
         }
         //attatch orders & tokens with user obj 
         $user->{'tokens'} = $this->tokenController->searchallUserTokens($user->id);
-        $user->{'orders'} = $this->ordersController->getUserOrders($user->id);
-  
+        $user->{'orders'} = $this->ordersController->getDownloadCount($user->id);
+
         return $user;
     }
     public function search($useremail)
@@ -114,5 +114,12 @@ class UserController implements Controller
             $token_id = $tokens[$foundIndex]->id;
             $this->tokenController->editOrRenwToken($token_id, true);
         }
+    }
+    public function logOut($token)
+    {
+       //to do 
+            // unset session & destroy it 
+       //delete token from cookie & database
+       $this->tokenController->deleteByTokenName($token);
     }
 }

@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Model\Order;
 
 
-class OrderController 
+class OrderController
 {
     public Order $Order;
 
@@ -19,12 +19,12 @@ class OrderController
         return $this->Order->getAllOrders();
     }
 
-    public function create($product_name, $user_id,$product_id)
+    public function create($product_name, $user_id, $product_id)
     {
         $product_name = htmlspecialchars(trim($product_name));
         $user_id = filter_var($user_id, FILTER_SANITIZE_NUMBER_INT);
-        $product_id= filter_var($product_id, FILTER_SANITIZE_NUMBER_INT);
-        
+        $product_id = filter_var($product_id, FILTER_SANITIZE_NUMBER_INT);
+
         $Order = ([
             'product_name' =>  $product_name,
             'user_id ' =>  $user_id,
@@ -44,10 +44,10 @@ class OrderController
         $id = filter_var($id, FILTER_SANITIZE_NUMBER_INT);
         return $this->Order->getData($id);
     }
-    public function search($product_name,$user_id)
+    public function search($product_name, $user_id)
     {
         $product_name = htmlspecialchars(trim($product_name));
-        return $this->Order->findByName($product_name,$user_id);
+        return $this->Order->findByName($product_name, $user_id);
     }
 
     public function edit($id, $pname = null, $link = null)
@@ -74,6 +74,20 @@ class OrderController
     public function getUserOrders($user_id)
     {
         return $this->Order->findUserOrders($user_id);
+    }
+    public function incrementDownloadCount($user_id, $product_id = 1)
+    {
+        $order = $this->Order->findByIds($user_id, $product_id);
+        //ok or Error
+        return $this->order->update(
+            $order->id,
+            ['download_count' => ($order->download_count + 1)]
+        );
+    }
+    public function getDownloadCount($user_id, $product_id = 1)
+    {
+        $order = $this->Order->findByIds($user_id, $product_id);
+        return $order->download_count;
     }
     public function destroy($id)
     {

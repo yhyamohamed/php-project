@@ -27,7 +27,8 @@ class Order
     public function update($id, $data)
     {
         try {
-            $this->table->where('id', $id)
+            $this->table
+                ->where('id', $id)
                 ->update($data);
             return "ok";
         } catch (\PDOException $ex) {
@@ -57,9 +58,16 @@ class Order
         return $this->table
             ->where('product_name', 'like', "%$product_name%")
             ->where('user_id',  $userId)
-            ->get();
+            ->get()->first();
     }
-    public function findUserOrders( $userId)
+    public function findByIds($userId, $product_id)
+    {
+        return $this->table
+            ->where('user_id',  $userId)
+            ->where('product_id', $product_id)
+            ->get()->first();
+    }
+    public function findUserOrders($userId)
     {
         return $this->table
             ->where('user_id',  $userId)
@@ -67,9 +75,8 @@ class Order
     }
     public function getAllOrders()
     {
-       return $this->table
+        return $this->table
             ->select('*')
             ->get();
-       
     }
 }
