@@ -1,8 +1,10 @@
 <?php
 
 //open session and loading the composer
+
+//open session and loading the composer
 session_start();
-require_once("../../../vendor/autoload.php");
+require_once("../../vendor/autoload.php");
 
 use App\Controllers\UserController;
 use App\Controllers\TokenController;
@@ -15,23 +17,23 @@ $error = '';
 //check for remember me
 if (isset($_COOKIE['remember-me']) && !isset($_SESSION['user_id']))
 {
-  $tokenDetails = $token->checkToken($_COOKIE['remember-me']);
-  var_dump($tokenDetails->user_id);
-  $_SESSION['user_id'] = $tokenDetails->user_id;
-  $userId = $tokenDetails->user_id;
-  $user->loginWithToken($userId);
-  header("location: ../downloadpage.php");
-  die;
+  // $tokenDetails = $token->checkToken($_COOKIE['remember-me']);
+  // var_dump($tokenDetails->user_id);
+  // $_SESSION['user_id'] = $tokenDetails->user_id;
+  // $userId = $tokenDetails->user_id;
+  // $user->loginWithToken($userId);
+  // header("location: downloadpage.php");
+  // die;
 }
 else if (!isset($_COOKIE['remember-me']) && isset($_SESSION['user_id']))
 {
-  header("location: ../downloadpage.php");
-  die;
+  // header("location: downloadpage.php");
+  // die;
 }
 else if (isset($_COOKIE['remember-me']) && isset($_SESSION['user_id']))
 {
-  header("location: ../downloadpage.php");
-  die;
+  // header("location: downloadpage.php");
+  // die;
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
@@ -48,18 +50,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
   if (strlen($ccnumber) != 16) //CCNO is valid
   {
-    $result = $controller->create($email, $password);
-    if ($result === "ok")
-    {
-      $userData = $controller->show($email, $password, false);
-      $_SESSION['user_id'] = $userData->id;
-      header('Location:../index.php');
-      die;
-    }
-    else
-    {
-      $error = $result;
-    }
+    // $result = $controller->create($email, $password);
+    // if ($result === "ok")
+    // {
+    //   $userData = $controller->show($email, $password, false);
+    //   $_SESSION['user_id'] = $userData->id;
+    //   header('Location:../index.php');
+    //   die;
+    // }
+    // else
+    // {
+    //   $error = $result;
+    // }
   }
 }
 
@@ -67,8 +69,8 @@ $title = "Payment";
 $active = "payment";
 const BASE_PATH = "/php-project/App/View";
 define("BASE_URL", $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . BASE_PATH);
-include "../includes/head.html";
-include "../includes/header.html";
+include "includes/head.html";
+include "includes/header.html";
 ?>
 
 <!DOCTYPE html>
@@ -79,7 +81,7 @@ include "../includes/header.html";
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Payment</title>
-  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 
 </head>
 
@@ -103,41 +105,7 @@ include "../includes/header.html";
           </div>
         <?php } ?>
         <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
-          <div class="border border-1 border-secondary p-3 pb-3 pt-3 mb-2">
-            <div class="mb-3">
-              <h4>Account credentials:</h4>
-            </div>
-            <div class="mb-3">
-              <label for="name" class="form-label">Name</label>
-              <input type="text" class="form-control" id="name" aria-describedby="nameHelp" name="name">
-              <div id="nameHelp" class="form-text"></div>
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
-              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" name="password">
-              <div id="passhelp" class="form-text">Password should be at least 8 characters in length and
-                it
-                must include the following.
-              </div>
 
-            </div>
-
-            <div class="mb-3">
-              <label for="passwordconf" class="form-label">Confirm Password</label>
-              <input type="password" class="form-control" id="passwordconf" name="passwordconf">
-            </div>
-
-
-            <!-- <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Remember me</label>
-        </div> -->
-          </div>
           <div class="border border-1 border-secondary p-3 pb-3 pt-3">
             <div class="mb-3">
               <h4>Card details:</h4>
@@ -223,8 +191,8 @@ include "../includes/header.html";
 
   </div>
 </body>
-<script src="../assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
 
 </html>
 
-<?php include "../includes/footer.html";
+<?php include "includes/footer.html";

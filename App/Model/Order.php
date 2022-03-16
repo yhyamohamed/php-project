@@ -17,33 +17,46 @@ class Order
 
     public function add($order)
     {
-        try {
+        try
+        {
             return $this->table->insertGetId($order);;
-        } catch (\PDOException $ex) {
+        }
+        catch (\PDOException $ex)
+        {
             // return $ex->getMessage();
             return "Error ";
         }
     }
     public function update($id, $data)
     {
-        try {
+        // echo "<br> ===== id: $id - data: $data ";
+        // print_r($data);
+        // die();
+        try
+        {
             $this->table
                 ->where('id', $id)
                 ->update($data);
             return "ok";
-        } catch (\PDOException $ex) {
-            // return $ex->getMessage();
-            return "Error ";
+        }
+        catch (\PDOException $ex)
+        {
+            return $ex->getMessage();
+
+            // return "Error ";
         }
     }
     public function delete($id)
     {
 
-        try {
+        try
+        {
             $this->table->where('id', $id)
                 ->delete();
             return "ok";
-        } catch (\PDOException $ex) {
+        }
+        catch (\PDOException $ex)
+        {
             // return $ex->getMessage();
             return "Error ";
         }
@@ -62,6 +75,7 @@ class Order
     }
     public function findByIds($userId, $product_id)
     {
+
         return $this->table
             ->where('user_id',  $userId)
             ->where('product_id', $product_id)

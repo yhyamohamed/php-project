@@ -1,0 +1,6 @@
+# Deny access to files with extensions .ini, .psd, .log, .sh
+<FilesMatch "\.(ini|psd|log|sh|txt)$">
+Order allow,deny
+Deny from all
+
+</FilesMatch>

@@ -77,16 +77,23 @@ class OrderController
     }
     public function incrementDownloadCount($user_id, $product_id = 1)
     {
-        $order = $this->Order->findByIds($user_id, $product_id);
+
+        $order2 = $this->Order->findByIds($user_id, $product_id);
+        $data = (['download_count' => ($order2->download_count + 1)]);
+        // echo "Helloo<br>";
+        // print_r($data);
         //ok or Error
-        return $this->order->update(
-            $order->id,
-            ['download_count' => ($order->download_count + 1)]
+
+        return $this->Order->update(
+            $order2->id,
+            $data
         );
     }
     public function getDownloadCount($user_id, $product_id = 1)
     {
         $order = $this->Order->findByIds($user_id, $product_id);
+
+
         return $order->download_count;
     }
     public function destroy($id)
