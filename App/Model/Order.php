@@ -71,7 +71,7 @@ class Order
     {
         return $this->table
             ->where('user_id',  $userId)
-            ->get();
+            ->get()->toArray();
     }
     public function getAllOrders()
     {
