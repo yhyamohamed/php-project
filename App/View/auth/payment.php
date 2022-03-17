@@ -1,7 +1,5 @@
 <?php
 
-  //open session and loading the composer
-  session_start();
 //open session ands loading the composer
 session_start();
 require_once("../../../vendor/autoload.php");

@@ -6,6 +6,34 @@ require_once("../../../vendor/autoload.php");
 use App\Controllers\UserController;
 use App\Controllers\OrderController;
 
+$controller = new UserController();
+$orderController = new OrderController();
+
+$id = 1;
+$userData = $controller->getDataByID($id);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
+{
+  // $name = $_POST["name"];
+  $email = $_POST["email"];
+  $password = $_POST["password"];
+  $passwordconf = $_POST["passwordconf"];
+
+
+    $result = $controller->edit($id, $email, $password);
+    if ($result >= 0)
+    {
+
+      $userData = $controller->getDataByID($id);
+    }
+    else
+    {
+      $error = $result;
+    }
+  }
+
+
+
 // 1- render user orders in a table (Tab_1)
 // 2- render a form filled with user credentials (Tab_2)
 //      - email, password, confirm password
@@ -15,8 +43,10 @@ const BASE_PATH = "/PHP_Project_Mine/php-project/App/View";
 define("BASE_URL", $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . BASE_PATH);
 include "../includes/head.html";
 include "../includes/header.html";
-$orderController = new OrderController();
-$orders = $orderController->getUserOrders(2);
+
+$orders = $orderController->getUserOrders(1);
+
+
 
 ?>
 
@@ -52,7 +82,38 @@ $orders = $orderController->getUserOrders(2);
                 </tbody>
             </table>
         </div>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+          <div class="border border-1 border-secondary p-3 pb-3 pt-3 mb-2">
+            <div class="mb-3">
+              <h4>Account credentials:</h4>
+            </div>
+        <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="email" value="<?= $userData->Email ?>" aria-describedby="emailHelp" name="email">
+              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" name="password">
+              <div id="passhelp" class="form-text">Password should be at least 8 characters in length and
+                it
+                must include the following.
+              </div>
+
+            </div>
+
+            <div class="mb-3">
+              <label for="passwordconf" class="form-label">Confirm Password</label>
+              <input type="password" class="form-control" id="passwordconf" name="passwordconf">
+            </div>  
+            </div>
+          <div class="btn-group mt-3">
+            <button type="submit" class="btn btn-primary  me-3 border-1 border-dark" name="submit" value="submit" id="submit">Update
+            </button>
+          </div>
+        </form>
+        </div>
     </div>
 </div>
 

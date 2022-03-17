@@ -75,6 +75,9 @@ class UserController implements Controller
 
         return $user;
     }
+    public function getDataByID($id){
+        return $this->user->getData($id);
+    }
     public function search($useremail)
     {
         $useremail = filter_var(trim($useremail), FILTER_SANITIZE_EMAIL);
