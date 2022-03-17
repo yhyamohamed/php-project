@@ -1,4 +1,5 @@
 <?php
+
 //open session ands loading the composer
 session_start();
 require_once("../../../vendor/autoload.php");
@@ -21,17 +22,17 @@ if (isset($_COOKIE['remember-me']) && !isset($_SESSION['user_id']))
   $_SESSION['user_id'] = $tokenDetails->user_id;
   $userId = $tokenDetails->user_id;
   $user->loginWithToken($userId);
-  header("location: ../download.php");
+  header("location: ../downloadpage.php");
   die;
 }
 else if (!isset($_COOKIE['remember-me']) && isset($_SESSION['user_id']))
 {
-  header("location: ../download.php");
+  header("location: ../downloadpage.php");
   die;
 }
 else if (isset($_COOKIE['remember-me']) && isset($_SESSION['user_id']))
 {
-  header("location: ../download.php");
+  header("location: ../downloadpage.php");
   die;
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
@@ -56,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
       $userData = $controller->show($email, $password, false);
       $_SESSION['user_id'] = $userData->id;
       $order = $orderController->create($_SESSION["user_id"], $product_id);
-      header("Location:../download.php?product_id=$product_id");
+      header("Location:../downloadpage.php?product_id=$product_id");
       die;
     }
     else
@@ -68,9 +69,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
 $title = "Payment";
 $active = "payment";
+const BASE_PATH = "/php-project/App/View";
+define("BASE_URL", $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . BASE_PATH);
 include "../includes/head.html";
 include "../includes/header.html";
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment</title>
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+</head>
+
+<body>
 
   <div class="container mt-5 p-5 bg-light border-2 shadow border">
     <div class="row">
@@ -209,5 +226,9 @@ include "../includes/header.html";
     </div>
 
   </div>
+</body>
+<script src="../assets/js/bootstrap.bundle.min.js"></script>
+
+</html>
 
 <?php include "../includes/footer.html";
