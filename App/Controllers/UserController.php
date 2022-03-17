@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Model\User;
 use App\Controllers\TokenController;
 use App\Controllers\OrderController;
+use Exception;
 
 
 class UserController implements Controller
@@ -120,6 +121,10 @@ class UserController implements Controller
        //to do 
             // unset session & destroy it 
        //delete token from cookie & database
-       $this->tokenController->deleteByTokenName($token);
+      try {
+        $this->tokenController->deleteByTokenName($token);
+      } catch (Exception $exception) {
+
+      }
     }
 }

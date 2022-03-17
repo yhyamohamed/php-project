@@ -2,7 +2,10 @@
 
 session_start();
 require_once '../../vendor/autoload.php';
-
+use App\Utilities\Helper;
+if (!isset($_SESSION['user_id'])) {
+  Helper::redirect("Location:login.php");
+}
 use App\Controllers\ProductController;
 use App\Controllers\OrderController;
 
@@ -30,25 +33,14 @@ $oc = new OrderController;
 $download_count = $oc->getDownloadCount($_SESSION["user_id"]) ?? 1;
 
 
+$title = 'Download';
+$active = 'download';
 
 
-
+  include "includes/head.html";
+  include "includes/header.html";
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="assets/css/style.css" rel="stylesheet" />
-
-    <title>Download Page</title>
-</head>
-
-<body style="height:100vh;">
     <div class="d-flex justify-content-center align-items-center h-100">
         <div class="card mb-3" style="max-width: 800px;">
             <div class="row g-0">
@@ -105,19 +97,15 @@ $download_count = $oc->getDownloadCount($_SESSION["user_id"]) ?? 1;
 
         </div>
     </div>
-    </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $("#download").click((e) => {
-            setTimeout(() => {
-                location.reload();
-                return false;
-            }, 500);
-        });
-    </script>
+<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--    <script>-->
+<!--        $("#download").click((e) => {-->
+<!--            setTimeout(() => {-->
+<!--                location.reload();-->
+<!--                return false;-->
+<!--            }, 500);-->
+<!--        });-->
+<!--    </script>-->
 
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+<?php
+  include "includes/footer.html";

@@ -10,6 +10,7 @@ class Helper
     static function redirect($redirectionLocation)
     {
         header("Location:$redirectionLocation");
+        die;
     }
     static function generateRandomString($length = 10)
     {

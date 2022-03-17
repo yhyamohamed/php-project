@@ -19,8 +19,6 @@
   }
   $title = "Login";
   $active = "login";
-  const BASE_PATH = "/PhpProject/php-project/App/View";
-  define("BASE_URL", $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . BASE_PATH);
   include "../includes/head.html";
   include "../includes/header.html";
 ?>
@@ -57,7 +55,7 @@
         </div>
         <div class="d-flex justify-content-center mb-3">
           <p>Don't have an account yet? </p>
-          <a href="#" class="link-primary"> Click here to sign-up!</a>
+          <a href="payment.php" class="link-primary"> Click here to sign-up!</a>
         </div>
       </form>
     </div>

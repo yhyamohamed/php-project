@@ -22,17 +22,17 @@ if (isset($_COOKIE['remember-me']) && !isset($_SESSION['user_id']))
   // $_SESSION['user_id'] = $tokenDetails->user_id;
   // $userId = $tokenDetails->user_id;
   // $user->loginWithToken($userId);
-  // header("location: downloadpage.php");
+  // header("location: download.php");
   // die;
 }
 else if (!isset($_COOKIE['remember-me']) && isset($_SESSION['user_id']))
 {
-  // header("location: downloadpage.php");
+  // header("location: download.php");
   // die;
 }
 else if (isset($_COOKIE['remember-me']) && isset($_SESSION['user_id']))
 {
-  // header("location: downloadpage.php");
+  // header("location: download.php");
   // die;
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST')

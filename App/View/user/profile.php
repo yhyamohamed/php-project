@@ -3,16 +3,14 @@
 session_start();
 require_once("../../../vendor/autoload.php");
 
-use App\Controllers\UserController;
 use App\Controllers\OrderController;
 
 // 1- render user orders in a table (Tab_1)
 // 2- render a form filled with user credentials (Tab_2)
 //      - email, password, confirm password
 //      - submit button to update data
-
-const BASE_PATH = "/PHP_Project_Mine/php-project/App/View";
-define("BASE_URL", $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . BASE_PATH);
+$title = 'Profile';
+$active = 'profile';
 include "../includes/head.html";
 include "../includes/header.html";
 $orderController = new OrderController();
