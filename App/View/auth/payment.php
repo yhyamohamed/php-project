@@ -1,93 +1,74 @@
 <?php
 
 //open session ands loading the composer
-session_start();
-require_once("../../../vendor/autoload.php");
+  session_start();
+  require_once("../../../vendor/autoload.php");
 
-use App\Controllers\OrderController;
-use App\Controllers\UserController;
-use App\Controllers\TokenController;
+  use App\Controllers\OrderController;
+  use App\Controllers\TokenController;
+  use App\Controllers\UserController;
+
 //will be used fore redirection
-use App\Utilities\Helper;
 
-$token = new TokenController();
-$user = new UserController();
-$error = '';
-$product_id = 1;
+  $token = new TokenController();
+  $user = new UserController();
+  $product_id = 1;
 //check for remember me
-if (isset($_COOKIE['remember-me']) && !isset($_SESSION['user_id']))
-{
-  $tokenDetails = $token->checkToken($_COOKIE['remember-me']);
-  var_dump($tokenDetails->user_id);
-  $_SESSION['user_id'] = $tokenDetails->user_id;
-  $userId = $tokenDetails->user_id;
-  $user->loginWithToken($userId);
-  header("location: ../downloadpage.php");
-  die;
-}
-else if (!isset($_COOKIE['remember-me']) && isset($_SESSION['user_id']))
-{
-  header("location: ../downloadpage.php");
-  die;
-}
-else if (isset($_COOKIE['remember-me']) && isset($_SESSION['user_id']))
-{
-  header("location: ../downloadpage.php");
-  die;
-}
-if ($_SERVER['REQUEST_METHOD'] === 'POST')
-{
-  // $name = $_POST["name"];
-  $email = $_POST["email"];
-  $password = $_POST["password"];
-  $passwordconf = $_POST["passwordconf"];
-  $ccname = $_POST['ccname'];
-  $ccnumber = $_POST['ccnumber'];
-  $ccmonth = $_POST['ccmonth'];
-  $ccyear = $_POST['ccyear'];
-  $cvv = $_POST['cvv'];
-  $controller = new UserController();
-  $orderController = new OrderController;
-  if (strlen($ccnumber) == 16) //CCNO is valid
-  {
-    $result = $controller->create($email, $password);
-    if ($result >= 0)
-    {
-
-      $userData = $controller->show($email, $password, false);
-      $_SESSION['user_id'] = $userData->id;
-      $order = $orderController->create($_SESSION["user_id"], $product_id);
-      header("Location:../downloadpage.php?product_id=$product_id");
-      die;
+  if (isset($_COOKIE['remember-me']) && !isset($_SESSION['user_id'])) {
+    $tokenDetails = $token->checkToken($_COOKIE['remember-me']);
+    $_SESSION['user_id'] = $tokenDetails->user_id;
+    $userId = $tokenDetails->user_id;
+    $user->loginWithToken($userId);
+    header("location: ../download.php");
+    die;
+  } else if (!isset($_COOKIE['remember-me']) && isset($_SESSION['user_id'])) {
+    header("location: ../download.php");
+    die;
+  } else if (isset($_COOKIE['remember-me']) && isset($_SESSION['user_id'])) {
+    header("location: ../download.php");
+    die;
+  }
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // $name = $_POST["name"];
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+    $passwordconf = $_POST["passwordconf"];
+    $ccname = $_POST['ccname'];
+    $ccnumber = $_POST['ccnumber'];
+    $ccmonth = $_POST['ccmonth'];
+    $ccyear = $_POST['ccyear'];
+    $cvv = $_POST['cvv'];
+    $controller = new UserController();
+    $orderController = new OrderController;
+    $errors = [];
+    foreach ($_POST as $key => $value) {
+      if (empty($value)) {
+        $errors[] = "Empty $key";
+      }
     }
-    else
-    {
-      $error = $result;
+    if (empty($errors)) {
+      if (strlen($ccnumber) == 16) {
+        $result = $controller->create($email, $password);
+        if ($result >= 0) {
+          $userData = $controller->show($email, $password, false);
+          $_SESSION['user_id'] = $userData->id;
+          $order = $orderController->create($_SESSION["user_id"], $product_id);
+          header("Location:../download.php?product_id=$product_id");
+          die;
+        }
+      }
+    } else {
+      if (strlen($ccnumber) !== 16) {
+        $errors[] = 'Invalid Credit Card';
+      }
     }
   }
-}
 
-$title = "Payment";
-$active = "payment";
-const BASE_PATH = "/php-project/App/View";
-define("BASE_URL", $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . BASE_PATH);
-include "../includes/head.html";
-include "../includes/header.html";
+  $title = "Payment";
+  $active = "payment";
+  include "../includes/head.html";
+  include "../includes/header.html";
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment</title>
-  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-
-</head>
-
-<body>
 
   <div class="container mt-5 p-5 bg-light border-2 shadow border">
     <div class="row">
@@ -97,15 +78,17 @@ include "../includes/header.html";
           Place an order
         </h2>
         <!--  ======== FORM START ==== FORM START ==== FORM START ==== FORM START ================================ -->
-        <?php if (!empty($error))
-        { ?>
-          <div class="d-flex justify-content-center">
-            <div class="alert alert-danger alert-dismissible fade show d-inline-block font-weight-bold" role="alert"><i class="fa fa-exclamation-circle ms-1"></i>
-              <?= $error ?>
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <?php if (!empty($errors)) {
+          foreach ($errors as $error) { ?>
+            <div class="d-flex justify-content-center">
+              <div class="alert alert-danger alert-dismissible fade show d-inline-block font-weight-bold" role="alert">
+                <i class="fa fa-exclamation-circle ms-1"></i>
+                <?= $error ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
             </div>
-          </div>
-        <?php } ?>
+          <?php }
+        } ?>
         <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
           <div class="border border-1 border-secondary p-3 pb-3 pt-3 mb-2">
             <div class="mb-3">
@@ -113,17 +96,17 @@ include "../includes/header.html";
             </div>
             <!-- <div class="mb-3">
               <label for="name" class="form-label">Name</label>
-              <input type="text" class="form-control" id="name" aria-describedby="nameHelp" name="name">
+              <input required type="text" class="form-control" id="name" aria-describedby="nameHelp" name="name">
               <div id="nameHelp" class="form-text"></div>
             </div> -->
             <div class="mb-3">
               <label for="email" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
+              <input required type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
               <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" name="password">
+              <input required type="password" class="form-control" id="password" name="password">
               <div id="passhelp" class="form-text">Password should be at least 8 characters in length and
                 it
                 must include the following.
@@ -133,12 +116,12 @@ include "../includes/header.html";
 
             <div class="mb-3">
               <label for="passwordconf" class="form-label">Confirm Password</label>
-              <input type="password" class="form-control" id="passwordconf" name="passwordconf">
+              <input required type="password" class="form-control" id="passwordconf" name="passwordconf">
             </div>
 
 
             <!-- <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <input required type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Remember me</label>
         </div> -->
           </div>
@@ -153,7 +136,8 @@ include "../includes/header.html";
                 <div class="col-sm-12">
                   <div class="form-group">
                     <label for="ccname">Cardholder Name</label>
-                    <input class="form-control" name="ccname" id="ccname" type="text" placeholder="Enter the cardholder name">
+                    <input required class="form-control" name="ccname" id="ccname" type="text"
+                           placeholder="Enter the cardholder name">
                   </div>
                 </div>
               </div>
@@ -163,7 +147,8 @@ include "../includes/header.html";
                   <div class="form-group">
                     <label for="ccnumber">Credit Card Number</label>
                     <div class="input-group">
-                      <input class="form-control" type="text" placeholder="0000 0000 0000 0000" id="ccnumber" name="ccnumber">
+                      <input required class="form-control" type="text" placeholder="0000 0000 0000 0000" id="ccnumber"
+                             name="ccnumber">
                       <!-- <div class="input-group-append">
                           <span class="input-group-text">
                               <i class="mdi mdi-credit-card"></i>
@@ -209,7 +194,7 @@ include "../includes/header.html";
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label for="cvv">CVV/CVC</label>
-                    <input class="form-control" id="cvv" type="text" placeholder="123" name="cvv">
+                    <input required class="form-control" id="cvv" type="text" placeholder="123" name="cvv">
                   </div>
                 </div>
               </div>
@@ -217,7 +202,8 @@ include "../includes/header.html";
 
           </div>
           <div class="btn-group mt-3">
-            <button type="submit" class="btn btn-primary  me-3 border-1 border-dark" name="submit" value="submit" id="submit">Place Order
+            <button type="submit" class="btn btn-primary  me-3 border-1 border-dark" name="submit" value="submit"
+                    id="submit">Place Order
             </button>
             <button class="btn btn-light  border-1 border-dark"> Reset Fields</button>
           </div>
@@ -226,9 +212,4 @@ include "../includes/header.html";
     </div>
 
   </div>
-</body>
-<script src="../assets/js/bootstrap.bundle.min.js"></script>
-
-</html>
-
 <?php include "../includes/footer.html";

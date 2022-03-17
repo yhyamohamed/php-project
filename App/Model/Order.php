@@ -79,7 +79,9 @@ class Order
     {
         return $this->table
             ->where('user_id',  $userId)
-            ->get()->toArray();
+          ->join('products', 'orders.product_id', '=', 'products.id')
+          ->select("*")
+          ->get()->toArray();
     }
     public function getAllOrders()
     {

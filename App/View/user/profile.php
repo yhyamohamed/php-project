@@ -4,11 +4,16 @@ session_start();
 require_once("../../../vendor/autoload.php");
 
 use App\Controllers\OrderController;
+  use App\Controllers\UserController;
+  use App\Utilities\Helper;
 
-$controller = new UserController();
+  $controller = new UserController();
 $orderController = new OrderController();
+if (!isset($_SESSION['user_id'])) {
+  Helper::redirect(BASE_PATH . "/auth/payment.php");
+}
+$id = $_SESSION['user_id'];
 
-$id = 1;
 $userData = $controller->getDataByID($id);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
@@ -42,10 +47,11 @@ $active = 'profile';
 include "../includes/head.html";
 include "../includes/header.html";
 
-$orders = $orderController->getUserOrders(1);
+$orders = $orderController->getUserOrders($id);
 
-
-
+//
+//var_dump($orders);
+//die;
 ?>
 
 <div class="container py-5">

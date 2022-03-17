@@ -6,18 +6,6 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 w-100">
-        <li class="nav-item">
-          <a class="nav-link<?= $active === 'home' ? ' active' : '';?>" aria-current="page" href="<?= BASE_URL; ?>/">
-            <i class="fa fa-home me-1"></i>
-            Home
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link<?= $active === 'payment' ? ' active' : '';?>" href="<?= BASE_URL; ?>/auth/payment.php">
-            <i class="fa fa-dollar me-1"></i>
-            Payment
-          </a>
-        </li>
         <?php if (isset($_SESSION['user_id'])) { ?>
         <li class="nav-item">
           <a class="nav-link<?= $active === 'download' ? ' active' : '';?>" href="<?= BASE_URL; ?>/download.php">
@@ -38,6 +26,12 @@
           </a>
         </li>
         <?php } else { ?>
+        <li class="nav-item">
+          <a class="nav-link<?= $active === 'payment' ? ' active' : '';?>" href="<?= BASE_URL; ?>/auth/payment.php">
+            <i class="fa fa-dollar me-1"></i>
+            Payment
+          </a>
+        </li>
         <li class="nav-item ms-auto">
           <a class="nav-link<?= $active === 'login' ? ' active' : '';?>" href="<?= BASE_URL; ?>/auth/login.php">
             <i class="fa fa-sign-in me-1"></i>

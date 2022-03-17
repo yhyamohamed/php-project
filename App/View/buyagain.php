@@ -13,27 +13,11 @@ use App\Utilities\Helper;
 
 $token = new TokenController();
 $user = new UserController();
-$error = '';
 //check for remember me
-if (isset($_COOKIE['remember-me']) && !isset($_SESSION['user_id']))
+if ( !isset($_SESSION['user_id']))
 {
-  // $tokenDetails = $token->checkToken($_COOKIE['remember-me']);
-  // var_dump($tokenDetails->user_id);
-  // $_SESSION['user_id'] = $tokenDetails->user_id;
-  // $userId = $tokenDetails->user_id;
-  // $user->loginWithToken($userId);
-  // header("location: download.php");
-  // die;
-}
-else if (!isset($_COOKIE['remember-me']) && isset($_SESSION['user_id']))
-{
-  // header("location: download.php");
-  // die;
-}
-else if (isset($_COOKIE['remember-me']) && isset($_SESSION['user_id']))
-{
-  // header("location: download.php");
-  // die;
+   Helper::redirect("payment.php");
+   die;
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
@@ -42,64 +26,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
   $ccmonth = $_POST['ccmonth'];
   $ccyear = $_POST['ccyear'];
   $cvv = $_POST['cvv'];
-  $controller = new UserController();
+  $errors = [];
+  foreach($_POST as $key => $value) {
+    if (empty($value)) {
+      $errors[] = "Empty $key";
+    }
+  }
 
   if (strlen($ccnumber) != 16) //CCNO is valid
   {
-    // $result = $controller->create($email, $password);
-    // if ($result === "ok")
-    // {
-    //   $userData = $controller->show($email, $password, false);
-    //   $_SESSION['user_id'] = $userData->id;
-    //   header('Location:../index.php');
-    //   die;
-    // }
-    // else
-    // {
-    //   $error = $result;
-    // }
+    $errors[] = 'Invalid Credit Card';
+  }
+  if (empty($errors)) {
+
+  } else {
+
   }
 }
 
 $title = "Payment";
 $active = "payment";
-const BASE_PATH = "/php-project/App/View";
-define("BASE_URL", $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . BASE_PATH);
 include "includes/head.html";
 include "includes/header.html";
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment</title>
-  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-
-</head>
-
-<body>
-
   <div class="container mt-5 p-5 bg-light border-2 shadow border">
     <div class="row">
       <div class="col-8 mx-auto">
-
         <h2 class="d-flex justify-content-center pt-2 pb-2 row col-6 mx-auto mb-5 shadow border border-2 border-primary">
           Place an order
         </h2>
         <!--  ======== FORM START ==== FORM START ==== FORM START ==== FORM START ================================ -->
-        <?php if (!empty($error))
-        { ?>
+        <?php
+            if (!empty($errors)) {
+            foreach($errors as $error) {
+              ?>
           <div class="d-flex justify-content-center">
             <div class="alert alert-danger alert-dismissible fade show d-inline-block font-weight-bold" role="alert"><i class="fa fa-exclamation-circle ms-1"></i>
               <?= $error ?>
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
           </div>
-        <?php } ?>
+        <?php } } ?>
         <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
 
           <div class="border border-1 border-secondary p-3 pb-3 pt-3">
@@ -113,7 +80,7 @@ include "includes/header.html";
                 <div class="col-sm-12">
                   <div class="form-group">
                     <label for="ccname">Cardholder Name</label>
-                    <input class="form-control" name="ccname" id="ccname" type="text" placeholder="Enter the cardholder name">
+                     class="form-control" name="ccname" id="ccname" type="text" placeholder="Enter the cardholder name">
                   </div>
                 </div>
               </div>
@@ -123,7 +90,7 @@ include "includes/header.html";
                   <div class="form-group">
                     <label for="ccnumber">Credit Card Number</label>
                     <div class="input-group">
-                      <input class="form-control" type="text" placeholder="0000 0000 0000 0000" id="ccnumber" name="ccnumber">
+                       class="form-control" type="text" placeholder="0000 0000 0000 0000" id="ccnumber" name="ccnumber">
                       <!-- <div class="input-group-append">
                           <span class="input-group-text">
                               <i class="mdi mdi-credit-card"></i>
@@ -169,7 +136,7 @@ include "includes/header.html";
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label for="cvv">CVV/CVC</label>
-                    <input class="form-control" id="cvv" type="text" placeholder="123" name="cvv">
+                     class="form-control" id="cvv" type="text" placeholder="123" name="cvv">
                   </div>
                 </div>
               </div>
@@ -186,9 +153,4 @@ include "includes/header.html";
     </div>
 
   </div>
-</body>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
-
-</html>
-
 <?php include "includes/footer.html";

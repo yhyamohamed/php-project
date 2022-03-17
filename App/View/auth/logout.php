@@ -12,4 +12,4 @@ if (isset($_COOKIE['remember-me'])) {
   $userToken = $_COOKIE['remember-me'];
   $controller->logOut($userToken);
 }
-Helper::redirect('Location:payment.php');
+Helper::redirect(BASE_PATH . "/auth/payment.php");

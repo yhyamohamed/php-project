@@ -25,7 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === "GET")
 }
 
 
-$link_token = $pc->showDetails($product_id)->download_file_link;
+$product = $pc->showDetails($product_id);
+$link_token = $product->download_file_link;
 $path = "../products/download.php?file=";
 
 $url = $path . $link_token;
@@ -41,7 +42,7 @@ $active = 'download';
   include "includes/header.html";
 ?>
 
-    <div class="d-flex justify-content-center align-items-center h-100">
+    <div class="d-flex justify-content-center align-items-center h-100 py-5">
         <div class="card mb-3" style="max-width: 800px;">
             <div class="row g-0">
                 <div class="col-md-4">
@@ -49,22 +50,21 @@ $active = 'download';
                 </div>
                 <div class="col-md-8">
                     <div class="card-body m-1">
-                        <h3 class="card-title">Card title</h3>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
+                        <h3 class="card-title"><?= $product->product_name ?></h3>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aspernatur blanditiis consectetur, culpa debitis dicta dolorem eaque eligendi eveniet explicabo fuga harum obcaecati officiis pariatur quam quis ratione similique, voluptatum!</p>
 
                         <?php if ($download_count == 7)
                         { ?>
                             <div class="d-flex align-items-center justify-content-between">
                                 <p class="m-0 lead text-danger">Download count: <span class="h4 fw-bold"><?php echo "$download_count" ?> !!</span></p>
-                                <a href="buyagain.php" class="btn btn-primary m-1 px-5" type="button">Buy Again</a>
+                                <a href="buyagain.php" class="btn btn-warning m-1 px-5" type="button">Buy Again</a>
                             </div>
                         <?php }
                         else
                         { ?>
                             <div class="d-flex align-items-center justify-content-between">
                                 <p class="m-0 lead">Download count: <span class="h4 fw-bold"><?php echo "$download_count" ?></span></p>
-                                <a href="<?php echo $url; ?>" class="btn btn-primary m-1 px-5" type="button" id="download">Download</a>
+                                <a href="<?php echo $url; ?>" class="btn btn-success m-1 px-5" type="button" id="download">Download</a>
                             </div>
                         <?php } ?>
 
@@ -80,15 +80,7 @@ $active = 'download';
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <strong>This is the first item's accordion body.</strong> It
-                                is shown by default, until the collapse plugin adds the
-                                appropriate classes that we use to style each element. These
-                                classes control the overall appearance, as well as the showing
-                                and hiding via CSS transitions. You can modify any of this
-                                with custom CSS or overriding our default variables. It's also
-                                worth noting that just about any HTML can go within the
-                                <code>.accordion-body</code>, though the transition does limit
-                                overflow.
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto asperiores commodi cum deleniti fugit quisquam similique vero. Alias amet at dolor enim exercitationem magni quae quasi sunt unde voluptates. Repudiandae.
                             </div>
                         </div>
                     </div>
