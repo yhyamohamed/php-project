@@ -69,7 +69,7 @@ $active = 'download';
                 </div>
 
               <p>Here is You QrCode!</p>
-              <img src="qrTrialCode.php" height="100" width="100" alt="QR Code">
+              <img src="qrTrialCode.php" class="flex-grow-0 qr" width="100" height="100" alt="QR Code">
                 <br><br>
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item border-0">

@@ -114,3 +114,7 @@ label {
 td {
   color: inherit !important;
 }
+.qr {
+  width: 100px;
+  height: 100px;
+}
