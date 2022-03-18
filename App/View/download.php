@@ -48,7 +48,7 @@ $active = 'download';
                 <div class="col-md-4">
                     <img src="assets/images/music-thumb.jpg" class="img-fluid m-2" alt="Theme preview">
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8 mb-3">
                     <div class="card-body m-1">
                         <h3 class="card-title"><?= $product->product_name ?></h3>
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aspernatur blanditiis consectetur, culpa debitis dicta dolorem eaque eligendi eveniet explicabo fuga harum obcaecati officiis pariatur quam quis ratione similique, voluptatum!</p>
@@ -67,6 +67,9 @@ $active = 'download';
 
                     </div>
                 </div>
+
+              <p>Here is You QrCode!</p>
+              <img src="qrTrialCode.php" height="100" width="100" alt="QR Code">
                 <br><br>
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item border-0">
