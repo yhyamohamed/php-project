@@ -55,26 +55,27 @@ class UserController implements Controller
         $useremail = filter_var(trim($useremail), FILTER_SANITIZE_EMAIL);
         $pass = htmlspecialchars(trim($pass));
         $user = $this->user->login($useremail, sha1($pass));
-
-        // generate remember me token
-        if ($user && $rememberMeFlag === 'on' && !isset($_COOKIE['remember-me'])) {
+        if (isset($user)) {
+          // generate remember me token
+          if ($user && $rememberMeFlag === 'on' && !isset($_COOKIE['remember-me'])) {
             $this->tokenController->create($user->id);
-        } else {
+          } else {
             //find tokens
             $tokens = $this->tokenController->searchallUserTokens($user->id);
             //will return index of first matched token or null
             $foundIndex = array_search($_COOKIE['remember-me'], array_column(json_decode($tokens), 'remeber_me_token'));
 
             if ($foundIndex >= 0) {
-                $token_id = $tokens[$foundIndex]->id;
-                $this->tokenController->editOrRenwToken($token_id, true);
+              $token_id = $tokens[$foundIndex]->id;
+              $this->tokenController->editOrRenwToken($token_id, true);
             }
-        }
-        //attatch orders & tokens with user obj 
-        $user->{'tokens'} = $this->tokenController->searchallUserTokens($user->id);
-        $user->{'orders'} = $this->ordersController->getDownloadCount($user->id);
-
+          }
+          //attatch orders & tokens with user obj
+          $user->{'tokens'} = $this->tokenController->searchallUserTokens($user->id);
+          $user->{'orders'} = $this->ordersController->getDownloadCount($user->id);
         return $user;
+        }
+        return false;
     }
     public function getDataByID($id){
         return $this->user->getData($id);

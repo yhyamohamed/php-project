@@ -43,7 +43,7 @@ $active = 'download';
 ?>
 
     <div class="d-flex justify-content-center align-items-center h-100 py-5">
-        <div class="card mb-3" style="max-width: 800px;">
+        <div class="card bg-light p-5 border border-4 border-dark mb-3" style="max-width: 800px;">
             <div class="row g-0">
                 <div class="col-md-4">
                     <img src="assets/images/music-thumb.jpg" class="img-fluid m-2" alt="Theme preview">
@@ -53,15 +53,12 @@ $active = 'download';
                         <h3 class="card-title"><?= $product->product_name ?></h3>
                         <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aspernatur blanditiis consectetur, culpa debitis dicta dolorem eaque eligendi eveniet explicabo fuga harum obcaecati officiis pariatur quam quis ratione similique, voluptatum!</p>
 
-                        <?php if ($download_count == 7)
-                        { ?>
+                        <?php if ($download_count == 7) { ?>
                             <div class="d-flex align-items-center justify-content-between">
                                 <p class="m-0 lead text-danger">Download count: <span class="h4 fw-bold"><?php echo "$download_count" ?> !!</span></p>
                                 <a href="buyagain.php" class="btn btn-warning m-1 px-5" type="button">Buy Again</a>
                             </div>
-                        <?php }
-                        else
-                        { ?>
+                        <?php } else { ?>
                             <div class="d-flex align-items-center justify-content-between">
                                 <p class="m-0 lead">Download count: <span class="h4 fw-bold"><?php echo "$download_count" ?></span></p>
                                 <a href="<?php echo $url; ?>" class="btn btn-success m-1 px-5" type="button" id="download">Download</a>

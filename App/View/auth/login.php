@@ -24,7 +24,7 @@
 ?>
 <div class="container">
   <div class="row">
-    <div class="col-8 m-auto mt-4">
+    <div class="col-8 col-lg-6 m-auto mt-4">
       <?php if (!empty($error)) { ?>
       <div class="d-flex justify-content-center">
         <div class="alert alert-danger alert-dismissible fade show d-inline-block font-weight-bold" role="alert"><i
@@ -38,24 +38,26 @@
         <div class="d-flex justify-content-center mb-3">
           <p class="fs-1">Login</p>
         </div>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="fs-4 form-label">Email address</label>
-          <input type="email" name="email" class="form-control" id="inputEmail" aria-describedby="emailHelp">
+        <div class="mb-3 form-floating">
+          <input placeholder="example@domain.com" type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
+          <label for="email">Email address</label>
+          <i class="fa fa-envelope-o position-absolute"></i>
         </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="fs-4 form-label">Password</label>
-          <input type="password" name="password" class="form-control" id="inputPassword">
+        <div class="mb-3 form-floating">
+          <input placeholder="***" type="password" name="password" class="form-control" id="password">
+          <label for="password">Password</label>
+          <i class="fa fa-lock position-absolute"></i>
         </div>
         <div class="form-check form-switch mb-3">
           <input class="form-check-input" name="remember_me" type="checkbox" id="flexSwitchCheckDefault">
           <label class="form-check-label" for="flexSwitchCheckDefault">Remember Me!</label>
         </div>
         <div class="d-flex justify-content-center mb-3">
-          <button type="submit" class="btn btn-dark fs-4 m-auto">Login</button>
+          <button type="submit" class="btn btn-primary m-auto">Login</button>
         </div>
         <div class="d-flex justify-content-center mb-3">
-          <p>Don't have an account yet? </p>
-          <a href="payment.php" class="link-primary"> Click here to sign-up!</a>
+          <p>Don't have an account yet? &nbsp;
+          <a href="payment.php"> Click here to sign-up!</a> </p>
         </div>
       </form>
     </div>
