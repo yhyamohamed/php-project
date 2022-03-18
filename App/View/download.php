@@ -53,8 +53,8 @@ $link_token = $product->download_file_link;
 $path = "../products/download.php?file=";
 
 $url = $path . $link_token;
-$oc = new OrderController;
-$download_count = $oc->getDownloadCount($_SESSION["user_id"]) ?? 1;
+$orderController = new OrderController;
+$download_count = $orderController->getDownloadCount($_SESSION["user_id"]) ?? 1;
 
 
 $title = 'Download';
@@ -87,7 +87,7 @@ include "includes/header.html";
                     { ?>
                         <div class="d-flex align-items-center justify-content-between">
                             <p class="m-0 lead">Download count: <span class="h4 fw-bold"><?php echo "$download_count" ?></span></p>
-                            <a href="<?php echo $url; ?>" class="btn btn-success m-1 px-5" type="button" id="download">Download</a>
+                            <a href="<?php echo $url; ?>" class="btn btn-success m-1 px-5" type="button" id="download" onclick="refresh()">Download</a>
                         </div>
                     <?php } ?>
 
@@ -115,15 +115,14 @@ include "includes/header.html";
 
     </div>
 </div>
-<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
-<!--    <script>-->
-<!--        $("#download").click((e) => {-->
-<!--            setTimeout(() => {-->
-<!--                location.reload();-->
-<!--                return false;-->
-<!--            }, 500);-->
-<!--        });-->
-<!--    </script>-->
+<script>
+    function refresh() {
+        setTimeout(() => {
+            location.reload();
+            return false;
+        }, 1200);
+    }
+</script>
 
 <?php
 include "includes/footer.html";
