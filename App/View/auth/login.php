@@ -1,39 +1,73 @@
 <?php
-  session_start();
-  require_once("../../../vendor/autoload.php");
-  use App\Controllers\UserController;
-  $error = '';
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $remember_me = isset($_POST['remember_me'])? 'on':false;
-    $controller = new UserController();
-    if ($userData = $controller->show($email, $password, $remember_me)) {
-      $_SESSION['user_id'] = $userData->id;
-      header('Location:../index.php');
-      var_dump($_SESSION['user_id']);
-      die;
-    } else {
-      $error = "Invalid Credentials";
-    }
+session_start();
+require_once("../../../vendor/autoload.php");
+
+use App\Controllers\TokenController;
+use App\Controllers\UserController;
+use App\Utilities\Helper;
+
+
+$error = '';
+$tokenController = new TokenController();
+$userController = new UserController();
+$product_id = 1;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST')
+{
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+  $remember_me = isset($_POST['remember_me']) ? 'on' : false;
+  $controller = new UserController();
+  if ($userData = $controller->show($email, $password, $remember_me))
+  {
+    $_SESSION['user_id'] = $userData->id;
+    header('Location:../index.php');
+    var_dump($_SESSION['user_id']);
+    die();
   }
-  $title = "Login";
-  $active = "login";
-  include "../includes/head.html";
-  include "../includes/header.html";
+  else
+  {
+    $error = "Invalid Credentials";
+  }
+}
+
+if (isset($_COOKIE['remember-me']) && !isset($_SESSION['user_id']))
+{
+  $tokenDetails = $tokenController->checkToken($_COOKIE['remember-me']);
+  $_SESSION['user_id'] = $tokenDetails->user_id;
+  $userId = $tokenDetails->user_id;
+  $userController->loginWithToken($userId);
+  Helper::redirect("../download.php");
+  die();
+}
+else if (!isset($_COOKIE['remember-me']) && isset($_SESSION['user_id']))
+{
+  Helper::redirect("../download.php");
+  die();
+}
+else if (isset($_COOKIE['remember-me']) && isset($_SESSION['user_id']))
+{
+  Helper::redirect("../download.php");
+  die();
+}
+
+$title = "Login";
+$active = "login";
+include "../includes/head.html";
+include "../includes/header.html";
 ?>
 <div class="container">
   <div class="row">
     <div class="col-8 col-lg-6 m-auto mt-4">
-      <?php if (!empty($error)) { ?>
-      <div class="d-flex justify-content-center">
-        <div class="alert alert-danger alert-dismissible fade show d-inline-block font-weight-bold" role="alert"><i
-              class="fas fa-exclamation-circle ms-1"></i>
-          <?= $error ?>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <?php if (!empty($error))
+      { ?>
+        <div class="d-flex justify-content-center">
+          <div class="alert alert-danger alert-dismissible fade show d-inline-block font-weight-bold" role="alert"><i class="fas fa-exclamation-circle ms-1"></i>
+            <?= $error ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
         </div>
-      </div>
-     <?php } ?>
+      <?php } ?>
       <form action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
         <div class="d-flex justify-content-center mb-3">
           <p class="fs-1">Login</p>
@@ -57,11 +91,12 @@
         </div>
         <div class="d-flex justify-content-center mb-3">
           <p>Don't have an account yet? &nbsp;
-          <a href="payment.php"> Click here to sign-up!</a> </p>
+            <a href="payment.php"> Click here to sign-up!</a>
+          </p>
         </div>
       </form>
     </div>
   </div>
 </div>
 <?php
-  include "../includes/footer.html";
+include "../includes/footer.html";
